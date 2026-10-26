@@ -1,0 +1,29 @@
+user:
+  is_admin: true
+  name: "Artem"
+  age: 24
+  position: "Java Developer"
+  skills:
+    - title: "Kubernetes"
+      level: 4
+      description: |
+        Опыт работы с кластерами в production.
+        Настройка Deployment, Service, Ingress,
+        а также отладка подов и сетевых политик.
+    - title: "Java"
+      level: 5
+      description: |
+        Разработка микросервисов, тестирование и профилирование.
+  residence:
+    country: "Россия"
+    city: "Москва"
+    street: "Тверская"
+    house_number: "10"
+    apartment_number: "25"
+  pets:
+    - name: "Барсик"
+      breed: "Британская короткошёрстная"
+      can_meow: true
+    - name: "Рекс"
+      breed: "Лабрадор"
+      can_meow: false
