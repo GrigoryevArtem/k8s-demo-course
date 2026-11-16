@@ -1,0 +1,38 @@
+name: deploy-vps
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - "kube-config/**"
+      - ".github/workflows/deploy-vps.yml"
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: azure/setup-kubectl@v4
+
+      - name: Write kubeconfig
+        run: |
+          mkdir -p ~/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > ~/.kube/config
+          chmod 600 ~/.kube/config
+          kubectl cluster-info
+          kubectl get nodes
+
+      - name: Apply manifests
+        run: |
+          kubectl apply -f kube-config/postgres-pvc.yml \
+            -f kube-config/postgres-deployment.yml \
+            -f kube-config/postgres-service.yml \
+            -f kube-config/rabbitmq-pvc.yml \
+            -f kube-config/rabbitmq-deployment.yml \
+            -f kube-config/rabbitmq-service.yml \
+            -f kube-config/app-deployment.yml \
+            -f kube-config/app-service.yml \
+            -f kube-config/vps/ingress-vps.yml
+          kubectl get pods,svc,ingress,pvc -n default
