@@ -5,7 +5,13 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - port: 5672
+    - name: amqp
+      port: 5672
+      targetPort: amqp
+      protocol: TCP
+    - name: management
+      port: 15672
+      targetPort: management
       protocol: TCP
   selector:
     components: rabbitmq

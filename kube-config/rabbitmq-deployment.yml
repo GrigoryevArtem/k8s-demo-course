@@ -15,9 +15,12 @@ spec:
       hostname: rabbitmq
       containers:
         - name: rabbitmq
-          image: rabbitmq:4.4.0
+          image: rabbitmq:4.4.0-management
           ports:
-            - containerPort: 5672
+            - name: amqp
+              containerPort: 5672
+            - name: management
+              containerPort: 15672
           env:
             - name: RABBITMQ_DEFAULT_USER
               value: demo
